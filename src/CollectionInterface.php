@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace TeamA\Collection;
 
-use Master\Model\InterfaceArray;
 use InvalidArgumentException;
 
-interface CollectionInterface extends CollectionTypeInterface, InterfaceArray
+interface CollectionInterface extends CollectionTypeInterface
 {
     /**
      * @throws InvalidArgumentException
