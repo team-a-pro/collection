@@ -1,4 +1,7 @@
 # collection
+
+[![Coverage Status](https://coveralls.io/repos/github/team-a-pro/collection/badge.svg?branch=master)](https://coveralls.io/github/team-a-pro/collection?branch=master)
+
 TeamA\Collection is a library of interfaces and traits for implementing collections and their filters.
 
 Filters are implemented as objects with a set of modifiers and can be connected using the "AND", "OR" logic.
