@@ -31,6 +31,10 @@ trait CollectionTrait
     {
         $this->checkType($sorter);
 
+        if ($sorter->isEmpty()) {
+            return $this;
+        }
+
         $entities = $this->entities;
 
         usort($entities, fn($a, $b): int => $sorter->compare($a, $b));

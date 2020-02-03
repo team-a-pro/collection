@@ -12,5 +12,7 @@ namespace TeamA\Collection;
  */
 interface CollectionSorterInterface extends CollectionTypeInterface
 {
+    public function isEmpty(): bool;
+
     public function compare(object $a, object $b): int;
 }
