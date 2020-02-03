@@ -6,7 +6,5 @@ namespace TeamA\Collection;
 
 interface CollectionTypeInterface
 {
-    public const BASE_TYPE = '';
-
     public function getBaseType() : string;
 }

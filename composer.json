@@ -32,5 +32,10 @@
     "psr-4": {
       "TeamA\\Collection\\Tests\\": "tests"
     }
+  },
+  "scripts": {
+    "test": "phpunit --colors=always --testsuite \"Collection Test Suite\"",
+    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+    "upload-coverage": "coveralls -v"
   }
 }
