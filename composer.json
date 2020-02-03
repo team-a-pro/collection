@@ -1,0 +1,36 @@
+{
+  "name": "team-a/collection",
+  "description": "Filtered collections.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexey Khokhlov",
+      "email": "owlet@team-a.pro",
+      "homepage": "https://team-a.pro",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "info@team-a.pro"
+  },
+  "keywords": [
+    "collection"
+  ],
+  "require": {
+    "php": "^7.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "TeamA\\Collection\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "TeamA\\Collection\\Tests\\": "tests"
+    }
+  }
+}
