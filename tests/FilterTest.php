@@ -15,13 +15,12 @@ class FilterTest extends TestCase
      * @dataProvider carProvider
      */
     public function testCar(
-        array                 $carsDefs,
-        ? CarCollectionFilter $filter,
-        bool                  $expectedHas,
-        bool                  $expectedHasNot,
-        array                 $expectedFilteredCarsDefs
-    )
-    {
+        array $carsDefs,
+        ?CarCollectionFilter $filter,
+        bool $expectedHas,
+        bool $expectedHasNot,
+        array $expectedFilteredCarsDefs
+    ) {
         $cars = [];
         foreach ($carsDefs as $carDef) { /* @var string[] $carDef */
             $cars[] = new Car(...$carDef);
@@ -44,7 +43,7 @@ class FilterTest extends TestCase
         );
     }
 
-    public function carProvider() : array
+    public function carProvider(): array
     {
         $cars = $this->getCars();
 
@@ -171,7 +170,7 @@ class FilterTest extends TestCase
         ];
     }
 
-    private function getCars() : array
+    private function getCars(): array
     {
         return [
             'VAZ 2101 white' => ['VAZ', '2101', 'white'],

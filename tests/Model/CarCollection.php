@@ -10,7 +10,7 @@ use TeamA\Collection\CollectionInterface;
 use TeamA\Collection\CollectionTrait;
 
 /**
- * @property Car[]       $_entities
+ * @property Car[]       $entities
  * @method   Car[]       asArray(CollectionFilterInterface $filter = null)
  * @method   Car  | null first(CollectionFilterInterface $filter = null)
  * @method   Car  | null last(CollectionFilterInterface $filter = null)
@@ -32,6 +32,6 @@ class CarCollection implements CollectionInterface
             }
         }
 
-        $this->_entities = $cars;
+        $this->entities = $cars;
     }
 }

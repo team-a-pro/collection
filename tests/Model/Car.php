@@ -35,7 +35,7 @@ class Car
     /**
      * @return string[]
      */
-    public function toArray() : array
+    public function toArray(): array
     {
         return [
             $this->vendor,

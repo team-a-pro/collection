@@ -8,7 +8,7 @@ use InvalidArgumentException;
 
 trait BaseTrait
 {
-    public function getBaseType() : string
+    public function getBaseType(): string
     {
         return static::BASE_TYPE;
     }
@@ -16,7 +16,7 @@ trait BaseTrait
     /**
      * @throws InvalidArgumentException
      */
-    protected function checkType(CollectionTypeInterface $type) : void
+    protected function checkType(CollectionTypeInterface $type): void
     {
         if (!is_a($this->getBaseType(), $type->getBaseType(), true)) {
             throw new InvalidArgumentException();

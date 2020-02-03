@@ -28,12 +28,12 @@ trait FilterTrait
      */
     private array $orFilters = [];
 
-    public static function new() : self
+    public static function new(): self
     {
         return new static();
     }
 
-    public function checkForMatchConditions($value): bool
+    public function checkForMatchConditions(object $value): bool
     {
         foreach ($this->orFilters as $orFilter) {
             if ($orFilter->checkForMatchConditions($value)) {
@@ -56,7 +56,7 @@ trait FilterTrait
         return true;
     }
 
-    public function checkForMismatchConditions($value): bool
+    public function checkForMismatchConditions(object $value): bool
     {
         foreach ($this->andFilters as $andFilter) {
             if ($andFilter->checkForMismatchConditions($value)) {
@@ -82,7 +82,7 @@ trait FilterTrait
     /**
      * @return static
      */
-    public function and(CollectionFilterInterface $filter) : CollectionFilterInterface
+    public function and(CollectionFilterInterface $filter): CollectionFilterInterface
     {
         $clone = clone $this;
         $clone->andFilters[] = $filter;
@@ -93,7 +93,7 @@ trait FilterTrait
     /**
      * @return static
      */
-    public function or(CollectionFilterInterface $filter) : CollectionFilterInterface
+    public function or(CollectionFilterInterface $filter): CollectionFilterInterface
     {
         $clone = clone $this;
         $clone->orFilters[] = $filter;
@@ -104,7 +104,7 @@ trait FilterTrait
     /**
      * @return static
      */
-    protected function withAndCondition(Closure $condition) : self
+    protected function withAndCondition(Closure $condition): self
     {
         $clone = clone $this;
         $clone->andConditions[] = $condition;

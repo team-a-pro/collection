@@ -12,7 +12,7 @@ trait SorterTrait
 {
     use BaseTrait;
 
-    public static function new() : self
+    public static function new(): self
     {
         return new static();
     }

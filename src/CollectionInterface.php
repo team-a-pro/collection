@@ -11,14 +11,14 @@ interface CollectionInterface extends CollectionTypeInterface
     /**
      * @throws InvalidArgumentException
      */
-    public function sort(CollectionSorterInterface $sorter) : CollectionInterface;
+    public function sort(CollectionSorterInterface $sorter): CollectionInterface;
 
     /**
      * @throws InvalidArgumentException
      */
-    public function filter(CollectionFilterInterface $filter) : CollectionInterface;
+    public function filter(CollectionFilterInterface $filter): CollectionInterface;
 
-    public function asArray(CollectionFilterInterface $filter = null) : array;
+    public function asArray(CollectionFilterInterface $filter = null): array;
 
     /**
      * @return mixed | null
@@ -30,11 +30,11 @@ interface CollectionInterface extends CollectionTypeInterface
      */
     public function last(CollectionFilterInterface $filter = null);
 
-    public function has(CollectionFilterInterface $filter = null) : bool;
+    public function has(CollectionFilterInterface $filter = null): bool;
 
-    public function isEmpty(CollectionFilterInterface $filter = null) : bool;
+    public function isEmpty(CollectionFilterInterface $filter = null): bool;
 
-    public function hasNot(CollectionFilterInterface $filter) : bool;
+    public function hasNot(CollectionFilterInterface $filter): bool;
 
-    public function count(CollectionFilterInterface $filter = null) : int;
+    public function count(CollectionFilterInterface $filter = null): int;
 }
