@@ -25,7 +25,14 @@ For a working example, see tests/Model.
 ```php
 <?php
 
-$collection = new Collection($items); 
+$collection = new CarCollection($cars); 
+
+$collection = $collection->sort(
+    CarCollectionSorter::new()
+        ->byModel()
+        ->byColor()
+);
+
 
 $filter = CollectionFilter::new()
     ->withColor('blue')
@@ -36,12 +43,12 @@ $filter = CollectionFilter::new()
     )
 ;
 
-$hasAtLeastOne = $collection->has($filter);
-$hasNoItems    = $collection->isEmpty($filter);
-$hasDiscarded  = $collection->hasNot($filter);
+$hasAtLeastOneCar = $collection->has($filter);
+$hasNoCars        = $collection->isEmpty($filter);
+$hasDiscardedCars = $collection->hasNot($filter);
 
-$firstItem = $collection->first($item);
-$lastItem  = $collection->last($item);
+$firstCar = $collection->first($filter);
+$lastCar  = $collection->last($filter);
 
 $array = $collection->filter($filter)->asArray();
 $count = $collection->count($filter);
