@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace TeamA\Collection;
 
-use InvalidArgumentException;
+use TypeError;
 
 interface CollectionInterface extends CollectionTypeInterface
 {
     /**
-     * @throws InvalidArgumentException
+     * @throws TypeError
      */
     public function sort(CollectionSorterInterface $sorter): CollectionInterface;
 
     /**
-     * @throws InvalidArgumentException
+     * @throws TypeError
      */
     public function sortReverse(CollectionSorterInterface $sorter): CollectionInterface;
 
     /**
-     * @throws InvalidArgumentException
+     * @throws TypeError
      */
     public function filter(CollectionFilterInterface $filter): CollectionInterface;
 
     /**
-     * @throws InvalidArgumentException
+     * @throws TypeError
      */
     public function filterNotMatched(CollectionFilterInterface $filter): CollectionInterface;
 

@@ -9,7 +9,10 @@ class CarCollectionSorter implements CollectionSorterInterface
 {
     use SorterTrait;
 
-    public const BASE_TYPE = Car::class;
+    public function getBaseType(): string
+    {
+        return Car::class;
+    }
 
     public function byVendorDesc(): self
     {

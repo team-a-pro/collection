@@ -19,7 +19,10 @@ class CarCollection implements CollectionInterface
 {
     use CollectionTrait;
 
-    public const BASE_TYPE = Car::class;
+    public function getBaseType(): string
+    {
+        return Car::class;
+    }
 
     /**
      * @param Car[] $cars

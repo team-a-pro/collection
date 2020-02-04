@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TeamA\Collection;
 
-use InvalidArgumentException;
+use TypeError;
 
 /**
  * Phpdoc template for CollectionInterface implementations.
@@ -25,7 +25,7 @@ trait CollectionTrait
 
     /**
      * @return static
-     * @throws InvalidArgumentException
+     * @throws TypeError
      */
     public function sort(CollectionSorterInterface $sorter): CollectionInterface
     {
@@ -34,7 +34,7 @@ trait CollectionTrait
 
     /**
      * @return static
-     * @throws InvalidArgumentException
+     * @throws TypeError
      */
     public function sortReverse(CollectionSorterInterface $sorter): CollectionInterface
     {
@@ -43,7 +43,7 @@ trait CollectionTrait
 
     /**
      * @return static
-     * @throws InvalidArgumentException
+     * @throws TypeError
      */
     public function filter(CollectionFilterInterface $filter): CollectionInterface
     {
@@ -58,7 +58,7 @@ trait CollectionTrait
 
     /**
      * @return static
-     * @throws InvalidArgumentException
+     * @throws TypeError
      */
     public function filterNotMatched(CollectionFilterInterface $filter): CollectionInterface
     {
@@ -246,7 +246,7 @@ trait CollectionTrait
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws TypeError
      */
     protected function sortInternal(CollectionSorterInterface $sorter, bool $reverse = false): CollectionInterface
     {
@@ -266,7 +266,7 @@ trait CollectionTrait
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws TypeError
      */
     protected function toArray(CollectionFilterInterface $filter = null, bool $invertFilter = false): array
     {
@@ -296,7 +296,7 @@ trait CollectionTrait
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws TypeError
      */
     protected function countInternal(CollectionFilterInterface $filter = null, bool $notMatched = false): int
     {

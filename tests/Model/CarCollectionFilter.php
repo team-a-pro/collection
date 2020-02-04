@@ -11,7 +11,10 @@ class CarCollectionFilter implements CollectionFilterInterface
 {
     use FilterTrait;
 
-    public const BASE_TYPE = Car::class;
+    public function getBaseType(): string
+    {
+        return Car::class;
+    }
 
     public function withVendor(string $vendor): self
     {
