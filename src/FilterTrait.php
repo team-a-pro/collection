@@ -33,10 +33,10 @@ trait FilterTrait
         return new static();
     }
 
-    public function checkForMatchConditions(object $value): bool
+    public function checkMatch(object $value): bool
     {
         foreach ($this->orFilters as $orFilter) {
-            if ($orFilter->checkForMatchConditions($value)) {
+            if ($orFilter->checkMatch($value)) {
                 return true;
             }
         }
@@ -48,30 +48,7 @@ trait FilterTrait
         }
 
         foreach ($this->andFilters as $andFilter) {
-            if (!$andFilter->checkForMatchConditions($value)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public function checkForMismatchConditions(object $value): bool
-    {
-        foreach ($this->andFilters as $andFilter) {
-            if ($andFilter->checkForMismatchConditions($value)) {
-                return true;
-            }
-        }
-
-        foreach ($this->andConditions as $condition) {
-            if ($condition($value)) {
-                return false;
-            }
-        }
-
-        foreach ($this->orFilters as $orFilter) {
-            if (!$orFilter->checkForMismatchConditions($value)) {
+            if (!$andFilter->checkMatch($value)) {
                 return false;
             }
         }

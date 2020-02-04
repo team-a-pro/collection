@@ -12,9 +12,7 @@ namespace TeamA\Collection;
  */
 interface CollectionFilterInterface extends CollectionTypeInterface
 {
-    public function checkForMatchConditions(object $value): bool;
-
-    public function checkForMismatchConditions(object $value): bool;
+    public function checkMatch(object $value): bool;
 
     /**
      * @return static
