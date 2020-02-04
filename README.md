@@ -18,7 +18,7 @@ Provides a check for matching the types included in the collection with the type
 
 ## Install via Composer
 
-`composer require team-a/collection:^1.1`
+`composer require team-a/collection:^1.2`
 
 ## Collection methods
 
