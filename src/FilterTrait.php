@@ -13,6 +13,8 @@ trait FilterTrait
 {
     use BaseTrait;
 
+    private bool $not = false;
+
     /**
      * @var Closure[]
      */
@@ -33,27 +35,47 @@ trait FilterTrait
         return new static();
     }
 
+    public function isEmpty(): bool
+    {
+        return !(
+            $this->andConditions
+            || $this->andFilters
+            || $this->orFilters
+        );
+    }
+
     public function checkMatch(object $value): bool
     {
-        foreach ($this->orFilters as $orFilter) {
-            if ($orFilter->checkMatch($value)) {
-                return true;
+        $result = true;
+
+        do {
+            foreach ($this->orFilters as $orFilter) {
+                if ($orFilter->checkMatch($value)) {
+                    $result = true;
+                    break 2;
+                }
             }
+
+            foreach ($this->andConditions as $condition) {
+                if (!$condition($value)) {
+                    $result = false;
+                    break 2;
+                }
+            }
+
+            foreach ($this->andFilters as $andFilter) {
+                if (!$andFilter->checkMatch($value)) {
+                    $result = false;
+                    break 2;
+                }
+            }
+        } while (false);
+
+        if ($this->not && !$this->isEmpty()) {
+            $result = !$result;
         }
 
-        foreach ($this->andConditions as $condition) {
-            if (!$condition($value)) {
-                return false;
-            }
-        }
-
-        foreach ($this->andFilters as $andFilter) {
-            if (!$andFilter->checkMatch($value)) {
-                return false;
-            }
-        }
-
-        return true;
+        return $result;
     }
 
     /**
@@ -74,6 +96,17 @@ trait FilterTrait
     {
         $clone = clone $this;
         $clone->orFilters[] = $filter;
+
+        return $clone;
+    }
+
+    /**
+     * @return static
+     */
+    public function not(): CollectionFilterInterface
+    {
+        $clone = clone $this;
+        $clone->not = !$clone->not;
 
         return $clone;
     }

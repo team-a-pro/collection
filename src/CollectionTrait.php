@@ -51,6 +51,11 @@ trait CollectionTrait
             return $this;
         }
 
+        if ($filter->isEmpty()) {
+            $this->checkType($filter);
+            return $this;
+        }
+
         return $this->createInternal(
             $this->asArray($filter)
         );
@@ -66,6 +71,11 @@ trait CollectionTrait
             return $this;
         }
 
+        if ($filter->isEmpty()) {
+            $this->checkType($filter);
+            return $this;
+        }
+
         return $this->createInternal(
             $this->asArrayNotMatched($filter)
         );
@@ -73,11 +83,13 @@ trait CollectionTrait
 
     public function has(CollectionFilterInterface $filter = null): bool
     {
-        if ($filter === null) {
-            return (bool) $this->entities;
+        if ($filter !== null) {
+            $this->checkType($filter);
         }
 
-        $this->checkType($filter);
+        if ($filter === null || $filter->isEmpty()) {
+            return (bool) $this->entities;
+        }
 
         if (!$this->entities) {
             return false;
@@ -102,11 +114,13 @@ trait CollectionTrait
 
     public function isEmpty(CollectionFilterInterface $filter = null): bool
     {
-        if ($filter === null) {
-            return !$this->entities;
+        if ($filter !== null) {
+            $this->checkType($filter);
         }
 
-        $this->checkType($filter);
+        if ($filter === null || $filter->isEmpty()) {
+            return !$this->entities;
+        }
 
         if (!$this->entities) {
             return !$this->entities;
@@ -163,12 +177,14 @@ trait CollectionTrait
             return null;
         }
 
-        if ($filter === null) {
+        if ($filter !== null) {
+            $this->checkType($filter);
+        }
+
+        if ($filter === null || $filter->isEmpty()) {
             $entities = $this->entities;
             return current($entities);
         }
-
-        $this->checkType($filter);
 
         foreach ($this->entities as $entity) {
             if ($filter->checkMatch($entity)) {
@@ -186,6 +202,10 @@ trait CollectionTrait
     {
         $this->checkType($filter);
 
+        if ($filter->isEmpty()) {
+            return null;
+        }
+
         foreach ($this->entities as $entity) {
             if (!$filter->checkMatch($entity)) {
                 return $entity;
@@ -200,16 +220,18 @@ trait CollectionTrait
      */
     public function last(CollectionFilterInterface $filter = null)
     {
+        if ($filter !== null) {
+            $this->checkType($filter);
+        }
+
         if (!$this->entities) {
             return null;
         }
 
-        if ($filter === null) {
+        if ($filter === null || $filter->isEmpty()) {
             $entities = $this->entities;
             return end($entities);
         }
-
-        $this->checkType($filter);
 
         $last = null;
 
@@ -228,6 +250,10 @@ trait CollectionTrait
     public function lastNotMatched(CollectionFilterInterface $filter)
     {
         $this->checkType($filter);
+
+        if ($filter->isEmpty()) {
+            return null;
+        }
 
         $last = null;
 
@@ -270,11 +296,13 @@ trait CollectionTrait
      */
     protected function toArray(CollectionFilterInterface $filter = null, bool $invertFilter = false): array
     {
-        if ($filter === null) {
-            return $this->entities;
+        if ($filter !== null) {
+            $this->checkType($filter);
         }
 
-        $this->checkType($filter);
+        if ($filter === null || $filter->isEmpty()) {
+            return $this->entities;
+        }
 
         if (!$this->entities) {
             return $this->entities;
@@ -308,6 +336,10 @@ trait CollectionTrait
 
         if (!$this->entities) {
             return 0;
+        }
+
+        if ($filter->isEmpty()) {
+            return count($this->entities);
         }
 
         $count = 0;
