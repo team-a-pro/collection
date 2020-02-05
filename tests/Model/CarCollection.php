@@ -27,7 +27,7 @@ class CarCollection implements CollectionInterface
     /**
      * @param Car[] $cars
      */
-    public function __construct(array $cars)
+    public function __construct(array $cars = [])
     {
         foreach ($cars as $car) {
             if (!$car instanceof Car) {

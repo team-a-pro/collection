@@ -7,8 +7,8 @@ namespace TeamA\Collection;
 /**
  * Implementations must be immutable.
  *
- * @method string getBaseType() method must return a type that is compensatory for the base type of the collection
- *  corresponding to the sorter.
+ * @method string getBaseType() method must return a type name that is covariant for the base type
+ *  of the collection corresponding to the sorter.
  */
 interface CollectionSorterInterface extends CollectionTypeInterface
 {

@@ -106,10 +106,12 @@ trait CollectionTrait
 
     public function isAllMatched(CollectionFilterInterface $filter): ?bool
     {
-        return $this->entities
-            ? !$this->hasNot($filter)
-            : null
-        ;
+        if (!$this->entities) {
+            $this->checkType($filter);
+            return null;
+        }
+
+        return !$this->hasNot($filter);
     }
 
     public function isEmpty(CollectionFilterInterface $filter = null): bool
@@ -173,12 +175,12 @@ trait CollectionTrait
      */
     public function first(CollectionFilterInterface $filter = null)
     {
-        if (!$this->entities) {
-            return null;
-        }
-
         if ($filter !== null) {
             $this->checkType($filter);
+        }
+
+        if (!$this->entities) {
+            return null;
         }
 
         if ($filter === null || $filter->isEmpty()) {
@@ -355,5 +357,15 @@ trait CollectionTrait
         }
 
         return $count;
+    }
+
+    /**
+     * @throws TypeError
+     */
+    protected function checkType(CollectionTypeInterface $type): void
+    {
+        if (!is_a($this->getBaseType(), $type->getBaseType(), true)) {
+            throw new TypeError('Collection item base type must be an contrvariant of filter/sorter item base type.');
+        }
     }
 }
