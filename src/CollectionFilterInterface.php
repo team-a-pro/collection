@@ -12,6 +12,8 @@ namespace TeamA\Collection;
  */
 interface CollectionFilterInterface extends CollectionTypeInterface
 {
+    public function isEmpty(): bool;
+
     public function checkMatch(object $value): bool;
 
     /**
@@ -23,4 +25,9 @@ interface CollectionFilterInterface extends CollectionTypeInterface
      * @return static
      */
     public function or(CollectionFilterInterface $otherFilter): CollectionFilterInterface;
+
+    /**
+     * @return static
+     */
+    public function not(): CollectionFilterInterface;
 }

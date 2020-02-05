@@ -18,9 +18,11 @@ Provides a check for matching the types included in the collection with the type
 
 ## Install via Composer
 
-`composer require team-a/collection:^2.0`
+`composer require team-a/collection:^2.1`
 
-## Collection methods
+## Methods
+
+### Collection
 
 * sort
 * sortReverse
@@ -38,6 +40,12 @@ Provides a check for matching the types included in the collection with the type
 * countNotMatched
 * asArray
 * asArrayNotMatched
+
+### Filter chains
+
+* and
+* or
+* not
 
 ## Examples
 
