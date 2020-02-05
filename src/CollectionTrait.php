@@ -47,10 +47,6 @@ trait CollectionTrait
      */
     public function filter(CollectionFilterInterface $filter): CollectionInterface
     {
-        if ($filter === null) {
-            return $this;
-        }
-
         if ($filter->isEmpty()) {
             $this->checkType($filter);
             return $this;
@@ -67,10 +63,6 @@ trait CollectionTrait
      */
     public function filterNotMatched(CollectionFilterInterface $filter): CollectionInterface
     {
-        if ($filter === null) {
-            return $this;
-        }
-
         if ($filter->isEmpty()) {
             $this->checkType($filter);
             return $this;
