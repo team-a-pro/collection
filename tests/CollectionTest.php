@@ -5,14 +5,90 @@ declare(strict_types=1);
 namespace TeamA\Collection\Tests;
 
 use Closure;
+use TeamA\Collection\CollectionInterface;
+use TeamA\Collection\CollectionTypeInterface;
 use TeamA\Collection\Tests\Model\Car;
 use TeamA\Collection\Tests\Model\CarCollection;
+use TeamA\Collection\Tests\Model\CarCollectionA;
 use TeamA\Collection\Tests\Model\CarCollectionFilter;
+use TeamA\Collection\Tests\Model\CarCollectionAFilter;
 use PHPUnit\Framework\TestCase;
+use TeamA\Collection\Tests\Model\CollectionIncompleted;
+use TeamA\Collection\Tests\Model\FilterIncompleted;
 use TeamA\Collection\Tests\Model\CarCollectionSorter;
+use TeamA\Collection\Tests\Model\SorterIncompleted;
+use TypeError;
 
 class FilterTest extends TestCase
 {
+    public function testExample()
+    {
+        $cars = [];
+        foreach ($this->getCarsDefinitions() as $def) {
+            $cars[] = new Car(...$def);
+        }
+
+        $carCollection = new CarCollection($cars);
+
+        $filteredCars = $carCollection
+            ->filter(
+                CarCollectionFilter::new()->withColor('red')
+                    ->or(
+                        CarCollectionFilter::new()->withVendor('VAZ')
+                            ->and(
+                                CarCollectionFilter::new()->not()->withModel('2109')
+                            )
+                    )
+            )
+            ->sort(
+                CarCollectionSorter::new()
+                    ->byVendorDesc()
+                    ->byModel()
+                    ->byColor()
+            );
+
+        $this->assertSame(
+            [
+                ['ZIS', '101', 'red'],
+                ['ZIS', '110', 'red'],
+                ['ZIS', '115', 'red'],
+
+                ['VAZ', '2101', 'blue'],
+                ['VAZ', '2101', 'red'],
+                ['VAZ', '2101', 'white'],
+
+                ['VAZ', '2105', 'blue'],
+                ['VAZ', '2105', 'red'],
+                ['VAZ', '2105', 'white'],
+
+                ['VAZ', '2109', 'red'],
+
+                ['Moskvich', '408', 'red'],
+                ['Moskvich', '412', 'red'],
+                ['Moskvich', '427', 'red'],
+            ],
+            $this->carCollectionToDefs($filteredCars)
+        );
+    }
+
+    /**
+     * @dataProvider exceptionsProvider
+     */
+    public function testExceptions(CollectionInterface $collection, string $method, CollectionTypeInterface $param)
+    {
+        $this->expectException(TypeError::class);
+        $collection->$method($param);
+    }
+
+    /**
+     * @dataProvider noExceptionsProvider
+     */
+    public function testNoExceptions(CollectionInterface $collection, string $method, CollectionTypeInterface $param)
+    {
+        $collection->$method($param);
+        $this->assertSame(true, true);
+    }
+
     /**
      * @dataProvider filterCarProvider
      * @dataProvider filterEmptyCarsProvider
@@ -115,6 +191,72 @@ class FilterTest extends TestCase
         );
     }
 
+    public function exceptionsProvider(): array
+    {
+        return [
+            [new CollectionIncompleted(), 'sort', new CarCollectionSorter()],
+            [new CollectionIncompleted(), 'sortReverse', new CarCollectionSorter()],
+            [new CollectionIncompleted(), 'filter', new CarCollectionFilter()],
+            [new CollectionIncompleted(), 'filterNotMatched', new CarCollectionFilter()],
+            [new CollectionIncompleted(), 'first', new CarCollectionFilter()],
+            [new CollectionIncompleted(), 'firstNotMatched', new CarCollectionFilter()],
+            [new CollectionIncompleted(), 'last', new CarCollectionFilter()],
+            [new CollectionIncompleted(), 'lastNotMatched', new CarCollectionFilter()],
+            [new CollectionIncompleted(), 'has', new CarCollectionFilter()],
+            [new CollectionIncompleted(), 'isAllMatched', new CarCollectionFilter()],
+            [new CollectionIncompleted(), 'isEmpty', new CarCollectionFilter()],
+            [new CollectionIncompleted(), 'hasNot', new CarCollectionFilter()],
+            [new CollectionIncompleted(), 'count', new CarCollectionFilter()],
+            [new CollectionIncompleted(), 'countNotMatched', new CarCollectionFilter()],
+            [new CollectionIncompleted(), 'asArray', new CarCollectionFilter()],
+            [new CollectionIncompleted(), 'asArrayNotMatched', new CarCollectionFilter()],
+
+            [new CarCollection(), 'sort', new SorterIncompleted()],
+            [new CarCollection(), 'sortReverse', new SorterIncompleted()],
+            [new CarCollection(), 'filter', new FilterIncompleted()],
+            [new CarCollection(), 'filterNotMatched', new FilterIncompleted()],
+            [new CarCollection(), 'first', new FilterIncompleted()],
+            [new CarCollection(), 'firstNotMatched', new FilterIncompleted()],
+            [new CarCollection(), 'last', new FilterIncompleted()],
+            [new CarCollection(), 'lastNotMatched', new FilterIncompleted()],
+            [new CarCollection(), 'has', new FilterIncompleted()],
+            [new CarCollection(), 'isAllMatched', new FilterIncompleted()],
+            [new CarCollection(), 'isEmpty', new FilterIncompleted()],
+            [new CarCollection(), 'hasNot', new FilterIncompleted()],
+            [new CarCollection(), 'count', new FilterIncompleted()],
+            [new CarCollection(), 'countNotMatched', new FilterIncompleted()],
+            [new CarCollection(), 'asArray', new FilterIncompleted()],
+            [new CarCollection(), 'asArrayNotMatched', new FilterIncompleted()],
+
+            [new CarCollection(), 'filter', new CarCollectionAFilter()],
+        ];
+    }
+
+    public function noExceptionsProvider(): array
+    {
+        return [
+            [new CarCollection(), 'sort', new CarCollectionSorter()],
+            [new CarCollection(), 'sortReverse', new CarCollectionSorter()],
+            [new CarCollection(), 'filter', new CarCollectionFilter()],
+            [new CarCollection(), 'filterNotMatched', new CarCollectionFilter()],
+            [new CarCollection(), 'first', new CarCollectionFilter()],
+            [new CarCollection(), 'firstNotMatched', new CarCollectionFilter()],
+            [new CarCollection(), 'last', new CarCollectionFilter()],
+            [new CarCollection(), 'lastNotMatched', new CarCollectionFilter()],
+            [new CarCollection(), 'has', new CarCollectionFilter()],
+            [new CarCollection(), 'isAllMatched', new CarCollectionFilter()],
+            [new CarCollection(), 'isEmpty', new CarCollectionFilter()],
+            [new CarCollection(), 'hasNot', new CarCollectionFilter()],
+            [new CarCollection(), 'count', new CarCollectionFilter()],
+            [new CarCollection(), 'countNotMatched', new CarCollectionFilter()],
+            [new CarCollection(), 'asArray', new CarCollectionFilter()],
+            [new CarCollection(), 'asArrayNotMatched', new CarCollectionFilter()],
+
+            [new CarCollectionA(), 'filter', new CarCollectionFilter()],
+            [new CarCollectionA(), 'filter', new CarCollectionAFilter()],
+        ];
+    }
+
     public function emptyFilterCarsProvider(): array
     {
         $emptyFilterTests = [];
@@ -155,7 +297,7 @@ class FilterTest extends TestCase
 
     public function filterCarProvider(): array
     {
-        $cars = $this->getCars();
+        $cars = $this->getCarsDefinitions();
 
         return [
             '#1' => [
@@ -368,7 +510,7 @@ class FilterTest extends TestCase
 
     public function sortCarProvider(): array
     {
-        $cars = $this->getCars();
+        $cars = $this->getCarsDefinitions();
 
         return [
             'emtpy sorter' => [
@@ -424,7 +566,7 @@ class FilterTest extends TestCase
         ];
     }
 
-    private function getCars(): array
+    private function getCarsDefinitions(): array
     {
         return [
             'VAZ 2101 white' => ['VAZ', '2101', 'white'],
