@@ -18,7 +18,11 @@ Provides a check for matching the types included in the collection with the type
 
 ## Install via Composer
 
+<<<<<<< HEAD
 `composer require team-a/collection:^2.1`
+=======
+`composer require team-a/collection:^2`
+>>>>>>> bd20ec479ae98fee512b1c91baa9379dd2e4c22c
 
 ## Methods
 
