@@ -44,16 +44,12 @@ trait SorterTrait
      * @param Closure[] $conditions
      * @return static
      */
-    protected function addConditions(array $conditions, bool $resetConditions = false): self
+    protected function addConditions(array $conditions): self
     {
         $clone = clone $this;
 
-        if ($resetConditions) {
-            $clone->conditions = $conditions;
-        } else {
-            foreach ($conditions as $condition) {
-                $clone->conditions[] = $condition;
-            }
+        foreach ($conditions as $condition) {
+            $clone->conditions[] = $condition;
         }
 
         return $clone;
